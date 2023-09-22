@@ -1,4 +1,10 @@
 #pragma once
+#include <filesystem>
+#include <iostream>
+#include <fstream>
+
+namespace fs = std::filesystem;
+
 class Pages
 {
 protected:
@@ -6,5 +12,9 @@ protected:
 	int project_count;
 	int thoughts_count;
 	int wikilog_count;
+
+public:
+	bool CreateHTMLFile(std::string fileName,fs::path& directory);
+	bool pageExists(const std::string &filename, const fs::path& path_to_directory);
 };
 

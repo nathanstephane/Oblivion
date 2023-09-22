@@ -22,6 +22,7 @@ void timer(time_t &time_now, sf::Text &text_)
 
 int main()
 {
+    std::cout << "Program started\n";
 
     Gui app;
     
@@ -32,7 +33,7 @@ int main()
     sf::Color background = {0,0,8};
     sf::Color text_color = { 231,236,239,100 };
     //std::string strDate = date;
-    std::cout << "Program started\n";
+  
 
     sf::RenderWindow window(sf::VideoMode(800, 800), "Oblivion");
     ImGui::SFML::Init(window);
@@ -57,7 +58,7 @@ int main()
     std::string thoughts_pages = std::to_string(app.get_thoughtsCount());
     std::string wikilog_pages = std::to_string(app.get_wikilogCount());
     //std::cout << app.get_overallcount() << "\n";
-
+   
 
     sf::Text stats_text;
     stats_text.setFont(font);
@@ -94,6 +95,9 @@ int main()
         app.DisplayMenu();
         ImGui::Separator();
         app.DisplayContent();
+        ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 100.f);
+        ImGui::Separator();
+        app.DisplayActions();
         
         ImGui::End();
 
