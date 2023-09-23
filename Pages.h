@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
+#include <string>
 
 namespace fs = std::filesystem;
 
@@ -12,6 +13,8 @@ protected:
 	int project_count;
 	int thoughts_count;
 	int wikilog_count;
+
+	std::string title; 
 
 public:
 	bool CreateHTMLFile(std::string fileName,fs::path& directory);
