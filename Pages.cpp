@@ -22,7 +22,8 @@ bool Pages::CreateHTMLFile(std::string fileName, fs::path& directory)
 			
 			//add title tag
 			
-			//update wikilog index page to add newly created entry
+			//update wikilog index page to add newly created entry (see newEntry on HTML.h)
+
 		}
 	}
 	else {

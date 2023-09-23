@@ -20,8 +20,41 @@ void timer(time_t &time_now, sf::Text &text_)
       
 }
 
+std::string newEntry(std::string& filename, std::string& title, std::string& description)
+{
+    std::string formatedOutput;
+
+    formatedOutput = "<a href=\"" + filename + "\">\n				\
+						\t<li class = \"bgHover\"><u>" + title + "</u>\n";
+    if (!description.empty())
+        formatedOutput += "\t<br><span><em>" + description + "</em></span>\n";
+    formatedOutput += "</li>\n</a>";
+    //</a>";
+    return formatedOutput;
+}
+
 int main()
 {
+  /*  [TEST] std::string flname, title, desc;
+    std::cout<<"filename: ";
+    std::cin >> flname;
+    std::cout << "\n";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::cout << "title: ";
+    std::getline(std::cin, title);
+    std::cout << "\n";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::cout << "description (use apostrophes and quotations): ";
+    std::getline(std::cin, desc);
+    std::cout << "\n";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::cout<<newEntry(flname,title,desc);
+    std::string none;
+    std::cin >>  none;*/
+
     std::cout << "Program started\n";
 
     Gui app;
