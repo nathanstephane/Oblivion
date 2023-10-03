@@ -35,25 +35,7 @@ std::string newEntry(std::string& filename, std::string& title, std::string& des
 
 int main()
 {
-  /*  [TEST] std::string flname, title, desc;
-    std::cout<<"filename: ";
-    std::cin >> flname;
-    std::cout << "\n";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    std::cout << "title: ";
-    std::getline(std::cin, title);
-    std::cout << "\n";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    std::cout << "description (use apostrophes and quotations): ";
-    std::getline(std::cin, desc);
-    std::cout << "\n";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    std::cout<<newEntry(flname,title,desc);
-    std::string none;
-    std::cin >>  none;*/
 
     std::cout << "Program started\n";
 

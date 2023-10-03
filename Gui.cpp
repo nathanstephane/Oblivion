@@ -204,10 +204,12 @@ void Gui::createFilePopup(fs::path& selectedDir)
 
 		if (ImGui::Button("Create Page"))
 		{
-			
+			HTML::optional optns;
+			optns.how = false;
+
 			std::string wholeFile = pagename + extension;
-			std::cout << "Created pagename " << wholeFile << " in " << selectedDir<<" title: "<<title <<"\n";
-			CreateHTMLFile(wholeFile, selectedDir);
+			//std::cout << "Created pagename " << wholeFile << " in " << selectedDir<<" title: "<<title <<"\n";
+			CreateHTMLFile(wholeFile, selectedDir,optns);
 		}
 		ImGui::EndPopup();
 	}

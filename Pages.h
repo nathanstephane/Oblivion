@@ -3,10 +3,11 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "HTML.h"
 
 namespace fs = std::filesystem;
 
-class Pages
+class Pages 
 {
 protected:
 	int overall_count;
@@ -17,7 +18,9 @@ protected:
 	std::string title; 
 
 public:
-	bool CreateHTMLFile(std::string fileName,fs::path& directory);
+	bool CreateHTMLFile(std::string fileName,fs::path& directory, HTML::optional &options);
 	bool pageExists(const std::string &filename, const fs::path& path_to_directory);
+	void searchAndReplace(fs::path& newFile);
+	void searchAndReplace(std::fstream& newFile, HTML::optional &options);
 };
 
