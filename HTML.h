@@ -13,8 +13,9 @@ public:
 		bool what = false;
 		bool why = false;
 		bool how = false;
-		bool when = false;
+		
 		bool where = false;
+		bool whens = false;
 	};
 private:
 	std::string  titleTag;

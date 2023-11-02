@@ -10,30 +10,44 @@ bool Pages::pageExists(const std::string &filename,const fs::path& path_to_direc
 
 void Pages::searchAndReplace(fs::path& path_of_file)
 {
-	std::fstream newFile;
-	newFile.open(path_of_file, std::fstream::out);
-
-	std::string string_buffer;
-	//if (newFile.is_open())
-	//{
-	//	std::cout << "\nOPENED";
-	//	newFile >> string_buffer;
-	//	std::cout << string_buffer;
-	//}
-	while (!newFile.eof())
+	std::cout << path_of_file << "\n";
+	// Open the file for reading
+	std::ifstream fin(path_of_file);
+	// Check if the file was opened successfully
+	if (!fin)
 	{
-		std::getline(newFile,string_buffer);
-		std::cout << string_buffer;
+		std::cerr << "Error opening file" << std::endl;
+		
 	}
+	// Read the contents of the file into a string
+	std::string text(
+		(std::istreambuf_iterator<char>(fin)),
+		std::istreambuf_iterator<char>());
+	fin.close();
+	// Perform the search and replace operation on the string
+	std::string search = "<!-- obxg:<title></title> -->";
+	std::string replace = "Pistache";
+	size_t pos = 0;
+	while ((pos = text.find(search, pos)) != std::string::npos)
+	{
+		text.replace(pos, search.length(), replace);
+		pos += replace.length();
+	}
+	// Open the file for writing
+	std::ofstream fout(path_of_file, std::ios::trunc);
+	// Check if the file was opened successfully
+	if (!fout)
+	{
+		std::cerr << "Error opening file" << std::endl;
+		return;
+	}
+	// Write the modified string back to the file
+	fout << text;
+	fout.close();
 }
 
 bool Pages::CreateHTMLFile(std::string fileName, fs::path& directory, HTML::optional &options)
 {
-	//std::cout << "Page " << fileName << " created in : " << directory.string() << "\n";
-	//std::cout << "Page " << fileName << " created in : " << directory.filename() << "\n";
-	//if (directory.filename() == "wikilog")
-	//	std::cout << "BOUYA";
-
 	if (!pageExists(fileName,directory))
 	{
 		fs::path filepath = directory / fileName;
@@ -45,8 +59,7 @@ bool Pages::CreateHTMLFile(std::string fileName, fs::path& directory, HTML::opti
 		templatefile.open(directory/"template.obxg", std::ios::in);
 
 		if (newFile.is_open())
-		{
-		
+		{	
 			std::string stringbuffer;
 			//writing data to new file from template.
 			while (!templatefile.eof())
@@ -55,29 +68,24 @@ bool Pages::CreateHTMLFile(std::string fileName, fs::path& directory, HTML::opti
 				std::getline(templatefile,stringbuffer);
 				newFile << stringbuffer << std::endl;
 			}
-			
-
-			searchAndReplace(filepath);
-			newFile.close();
-			//if (directory.filename() == "projects")
-				//searchAndReplace(newFile, options);
-			// title tag
-			
-			// path navigator tag
-			
-			// h2
-			 
-			//update wikilog index page to add newly created entry (see newEntry on HTML.h)
-			
-		
-		}
-		
+			newFile.close();		
+		}	
 		templatefile.close();
+		return true;
 	}
 	else {
 		//create modal in here or something to warn me that the file exists already
 		std::cout << "Sorry a page with the same name already exists.Mind giving it another name ?\n";
+		return 0;
 	}
-
-	return true;
 }
+
+//if (directory.filename() == "projects")
+	//searchAndReplace(newFile, options);
+// title tag
+
+// path navigator tag
+
+// h2
+
+//update wikilog index page to add newly created entry (see newEntry on HTML.h)

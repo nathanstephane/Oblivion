@@ -21,6 +21,6 @@ public:
 	bool CreateHTMLFile(std::string fileName,fs::path& directory, HTML::optional &options);
 	bool pageExists(const std::string &filename, const fs::path& path_to_directory);
 	void searchAndReplace(fs::path& newFile);
-	void searchAndReplace(std::fstream& newFile, HTML::optional &options);
+	//void searchAndReplace(std::fstream& newFile, HTML::optional &options);
 };
 

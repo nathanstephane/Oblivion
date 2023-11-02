@@ -110,8 +110,9 @@ void Gui::DisplayActions()
 			//Modal to prompt for file name
 			dirPages = currentPath;
 			open_createModal = true;
-			if (currentPath==wikilog_dir)
-			ImGui::OpenPopup("CREATE WIKILOG FILE");
+			//if (currentPath==wikilog_dir)
+			ImGui::OpenPopup("CREATE HTML FILE");
+			
 
 			//Create file based on template file
 				//if in wikilog/ -> ask for pagename, title
@@ -178,13 +179,14 @@ void Gui::metrics()
 void Gui::createFilePopup(fs::path& selectedDir)
 {
 	//std::cout << selectedDir << "\n";
-	if (ImGui::BeginPopupModal("CREATE WIKILOG FILE", &open_createModal) )
+	if (ImGui::BeginPopupModal("CREATE HTML FILE", &open_createModal) )
 	{
 		std::string extension = ".html";
 		static char pagename[300] = { '\0' };
 		ImGui::Text("Page name");
 		ImGui::SameLine();
 		ImGui::InputText(".html", pagename, sizeof(pagename));
+		ImGui::Text("\n\n");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
 
 		ImGui::Checkbox("Use page name as title", &pagename_is_title);
@@ -201,15 +203,30 @@ void Gui::createFilePopup(fs::path& selectedDir)
 			std::memcpy(title,pagename,strlen(pagename)+1);
 		}
 		
+		
+		
+		if (selectedDir.filename() == "projects")
+		{
+			ImGui::Checkbox("What ?", &optns.what);
+			ImGui::Checkbox("When ?", &optns.why);
+			ImGui::Checkbox("How ?", &optns.how);
+			ImGui::Checkbox("_when ?", &optns.whens);
+			ImGui::Checkbox("Where ?", &optns.where);
 
+		}
+		
 		if (ImGui::Button("Create Page"))
 		{
-			HTML::optional optns;
-			optns.how = false;
+			
 
 			std::string wholeFile = pagename + extension;
 			//std::cout << "Created pagename " << wholeFile << " in " << selectedDir<<" title: "<<title <<"\n";
-			CreateHTMLFile(wholeFile, selectedDir,optns);
+			
+			if (CreateHTMLFile(wholeFile, selectedDir, optns))
+			{
+				fs::path filepath = selectedDir/ wholeFile;
+				searchAndReplace(filepath);
+			}
 		}
 		ImGui::EndPopup();
 	}

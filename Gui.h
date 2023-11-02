@@ -26,6 +26,8 @@ private:
 
 	bool open_createModal=false;
 	bool pagename_is_title = false;
+
+	HTML::optional optns;
 public:
 	Gui() : currentPath(fs::current_path()){
 		selected_item = fs::path{};
@@ -38,6 +40,8 @@ public:
 			 thoughts_dir = fs::current_path() /= "bitofshell\\thoughts";
 			 wikilog_dir = fs::current_path() /= "bitofshell\\wikilog";
 		}
+		
+		
 	}
 public:
 	void DisplayMenu();
