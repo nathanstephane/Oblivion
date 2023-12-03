@@ -11,37 +11,36 @@ bool Pages::pageExists(const std::string &filename,const fs::path& path_to_direc
 void Pages::searchAndReplace(fs::path& path_of_file)
 {
 	std::cout << path_of_file << "\n";
-	// Open the file for reading
+	// Opening the file for reading
 	std::ifstream fin(path_of_file);
-	// Check if the file was opened successfully
+	// Checking if the file was opened successfully
 	if (!fin)
 	{
 		std::cerr << "Error opening file" << std::endl;
-		
 	}
-	// Read the contents of the file into a string
-	std::string text(
-		(std::istreambuf_iterator<char>(fin)),
-		std::istreambuf_iterator<char>());
+	// Reading the contents of the file into a string
+	std::string text( (std::istreambuf_iterator<char>(fin)), std::istreambuf_iterator<char>());
 	fin.close();
-	// Perform the search and replace operation on the string
-	std::string search = "<!-- obxg:<title></title> -->";
-	std::string replace = "Pistache";
+	// Performing the search and replace operation on the string
+	std::string searchHeaderTitle = "<!-- obxg:<title></title> -->";
+	std::string searchPath = "<!-- obxg:<nav>path</nav> -->";
+	std::string searchTitle = "<!-- obxg:<h2>title</h2> -->";
+	std::string replaceTitle = "Pistache";
 	size_t pos = 0;
-	while ((pos = text.find(search, pos)) != std::string::npos)
+	while ((pos = text.find(searchTitle, pos)) != std::string::npos)
 	{
-		text.replace(pos, search.length(), replace);
-		pos += replace.length();
+		text.replace(pos, searchTitle.length(), replaceTitle);
+		pos += replaceTitle.length();
 	}
-	// Open the file for writing
+	// Opening the file for writing
 	std::ofstream fout(path_of_file, std::ios::trunc);
-	// Check if the file was opened successfully
+	// Checking if the file was opened successfully
 	if (!fout)
 	{
 		std::cerr << "Error opening file" << std::endl;
 		return;
 	}
-	// Write the modified string back to the file
+	// Writing the modified string back to the file
 	fout << text;
 	fout.close();
 }

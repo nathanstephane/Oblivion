@@ -60,7 +60,7 @@ int main()
     {
         std::cout << "Font not loaded!";
     }
-    
+   
     sf::Text date_text;
     date_text.setFont(font);
     date_text.setFillColor(text_color);
@@ -84,18 +84,10 @@ int main()
                         +"\nThoughts:   \t"+thoughts_pages+"\t\tWikilogs: "+wikilog_pages);
     
 
-
-
-
     sf::Clock deltaClock;
     while (window.isOpen())
     {
-        timer(now, date_text);
-       /* now = time(0);
-        char* date = ctime(&now);
-        std::string strDate = date;
-        text.setString("Date: " + strDate);*/
-        
+        timer(now, date_text);   
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -115,7 +107,7 @@ int main()
         app.DisplayActions();
         
         ImGui::End();
-
+    
         window.clear(background);
         window.draw(date_text);
         window.draw(stats_text);

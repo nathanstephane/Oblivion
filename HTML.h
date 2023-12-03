@@ -15,7 +15,18 @@ public:
 		bool how = false;
 		
 		bool where = false;
-		bool whens = false;
+		bool _when = false;
+	};
+
+	struct mandatory
+	{
+		std::string header_title(const std::string& title) { return "<title>"+title+"</title>"; };
+		std::string navigation_path(const std::string& title, const std::string& where)
+		{
+			//hardcoding for now. Will need to change this later
+
+		}
+		std::string body_title;
 	};
 private:
 	std::string  titleTag;

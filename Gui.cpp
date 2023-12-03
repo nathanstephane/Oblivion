@@ -112,16 +112,11 @@ void Gui::DisplayActions()
 			open_createModal = true;
 			//if (currentPath==wikilog_dir)
 			ImGui::OpenPopup("CREATE HTML FILE");
-			
-
 			//Create file based on template file
 				//if in wikilog/ -> ask for pagename, title
 				//if in project/ -> ask for pagename, title, what?, why?, when?, where?, how?
-				//if in thoughts/ -> ask for pagename, title, tag(philocyber, universe,srandom)
-				
+				//if in thoughts/ -> ask for pagename, title, tag(philocyber, universe,srandom)				
 		}
-
-
 	}
 
 
@@ -195,8 +190,7 @@ void Gui::createFilePopup(fs::path& selectedDir)
 		{
 			ImGui::Text("Page title");
 			ImGui::SameLine();
-			ImGui::InputText("###", title, sizeof(title));
-			
+			ImGui::InputText("###", title, sizeof(title));			
 		}
 		else 
 		{
@@ -210,18 +204,19 @@ void Gui::createFilePopup(fs::path& selectedDir)
 			ImGui::Checkbox("What ?", &optns.what);
 			ImGui::Checkbox("When ?", &optns.why);
 			ImGui::Checkbox("How ?", &optns.how);
-			ImGui::Checkbox("_when ?", &optns.whens);
+			ImGui::Checkbox("When ?", &optns._when);
 			ImGui::Checkbox("Where ?", &optns.where);
-
 		}
 		
+
+		auto& mandatotyTags = mandatory;
+	//	HTML page;
+		
+		//mandatotyTags.
 		if (ImGui::Button("Create Page"))
 		{
-			
-
 			std::string wholeFile = pagename + extension;
 			//std::cout << "Created pagename " << wholeFile << " in " << selectedDir<<" title: "<<title <<"\n";
-			
 			if (CreateHTMLFile(wholeFile, selectedDir, optns))
 			{
 				fs::path filepath = selectedDir/ wholeFile;

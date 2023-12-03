@@ -28,6 +28,7 @@ private:
 	bool pagename_is_title = false;
 
 	HTML::optional optns;
+	HTML::mandatory mandatory;
 public:
 	Gui() : currentPath(fs::current_path()){
 		selected_item = fs::path{};
