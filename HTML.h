@@ -23,7 +23,7 @@ public:
 		std::string header_title(const std::string& title) { return "<title>"+title+"</title>"; };
 		std::string navigation_path(const std::string& title, const std::string& where)
 		{
-			//hardcoding for now. Will need to change this later
+			//hardcoding for now. Will need to change this later 
 
 		}
 		std::string body_title;
@@ -45,6 +45,8 @@ public:
 
 	// builds a new navigation path at  <!-- obxg:<nav>path</nav> -->
 	std::string navPath(const fs::path& dir,std::string title);
+
+	std::string optionalTag(const std::string& kind);
 
 	std::string generated();
 

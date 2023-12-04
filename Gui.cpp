@@ -140,7 +140,6 @@ void Gui::metrics()
 		if (item.path().extension() == ".html")
 		{
 			++overall_count;
-
 		}
 
 		if (item.is_directory())
@@ -165,10 +164,7 @@ void Gui::metrics()
 		}
 
 	}
-	/*std::cout << overall_count << " files\n";
-	std::cout << project_count << " projects files\n";
-	std::cout << thoughts_count << " thoughts files\n";
-	std::cout << wikilog_count << " wikilog files\n";*/
+
 }
 
 void Gui::createFilePopup(fs::path& selectedDir)
@@ -198,29 +194,34 @@ void Gui::createFilePopup(fs::path& selectedDir)
 		}
 		
 		
+		//mandatory
+		HTML maker;
+		mandatoryData.titleTag = maker.maketitleTag(title);
+		mandatoryData.path = maker.navPath(selectedDir, title);
+		mandatoryData.headerTitle = maker.makeheaderTag(title);
+		
+
+		
 		
 		if (selectedDir.filename() == "projects")
 		{
-			ImGui::Checkbox("What ?", &optns.what);
-			ImGui::Checkbox("When ?", &optns.why);
-			ImGui::Checkbox("How ?", &optns.how);
-			ImGui::Checkbox("When ?", &optns._when);
-			ImGui::Checkbox("Where ?", &optns.where);
+			if (ImGui::Checkbox("What ?", &optns.what)) { optionalData.what = maker.optionalTag("What"); }
+			if (ImGui::Checkbox("Why ?", &optns.why))	optionalData.what = maker.optionalTag("Why");
+			if (ImGui::Checkbox("How ?", &optns.how))	optionalData.what = maker.optionalTag("How");
+			if (ImGui::Checkbox("When ?", &optns._when)) optionalData.what = maker.optionalTag("When");
+			if (ImGui::Checkbox("Where ?", &optns.where))optionalData.what = maker.optionalTag("Where");
 		}
-		
 
-		auto& mandatotyTags = mandatory;
 	//	HTML page;
 		
-		//mandatotyTags.
-		if (ImGui::Button("Create Page"))
+	if (ImGui::Button("Create Page"))
 		{
 			std::string wholeFile = pagename + extension;
 			//std::cout << "Created pagename " << wholeFile << " in " << selectedDir<<" title: "<<title <<"\n";
 			if (CreateHTMLFile(wholeFile, selectedDir, optns))
 			{
-				fs::path filepath = selectedDir/ wholeFile;
-				searchAndReplace(filepath);
+				fs::path filepath = selectedDir / wholeFile;
+				searchAndReplace(filepath, mandatoryData);
 			}
 		}
 		ImGui::EndPopup();

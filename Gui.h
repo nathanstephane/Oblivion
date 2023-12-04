@@ -8,7 +8,7 @@
 
 namespace fs = std::filesystem; namespace ig = ImGui;
 
-class Gui : Pages
+class Gui : Page
 {
 private:
 	fs::path currentPath;
@@ -29,6 +29,10 @@ private:
 
 	HTML::optional optns;
 	HTML::mandatory mandatory;
+	
+	Page mandatoryData;
+	Page optionalData;
+
 public:
 	Gui() : currentPath(fs::current_path()){
 		selected_item = fs::path{};

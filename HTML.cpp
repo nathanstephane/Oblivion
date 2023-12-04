@@ -17,9 +17,9 @@ std::string HTML::navPath(const fs::path& dir, std::string title)
 {
 	std::string navigation_path;
 
-	navigation_path = "<nav>You are here://<a href=\"../index.html\">bitofshell</a>/\
-						<a href=\"../"+dir.filename().string()+"/index.html>"+dir.filename().string()+"</a>/"+title+"\
-						<span class=\"blink\">|</span></nav>";
+navigation_path = "<nav>You are here://<a href=\"../index.html\">bitofshell</a>/\
+<a href=\"../"+dir.filename().string()+"/index.html\">"+dir.filename().string()+"</a>/"+trim(title)+"\
+<span class=\"blink\">|</span></nav>";
 	
 	return navigation_path;
 }
@@ -30,12 +30,12 @@ std::string HTML::generated()
 	char* date = ctime(&time_now);
 	std::string strDate = date;
 
-
 	return "<!-- Generated with Oblivion on "+strDate+" -->";
 }
 
 
 
+//in index of category pages
 std::string HTML::newEntry(std::string& filename, std::string& title, std::string& description)
 {
 	std::string formatedOutput;
@@ -49,16 +49,23 @@ std::string HTML::newEntry(std::string& filename, std::string& title, std::strin
 	return formatedOutput;
 }
 
+
+//"<title>"title"</title>"
 std::string HTML::maketitleTag(const std::string& title)
 {
 	return "<title>"+ trim(title) + "</title>";
 }
 
 
-
+//<h2>title</h2>
 std::string HTML::makeheaderTag(const std::string& title)
 {
 	return "<h2>" + trim(title) + "</h2>";
 }
 
+
+std::string HTML::optionalTag(const std::string& kind)
+{
+	return "<p><u>"+ trim(kind) + "<u>:</p>";
+}
 
