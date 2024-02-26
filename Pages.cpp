@@ -3,17 +3,15 @@
 
 bool Page::pageExists(const std::string &filename,const fs::path& path_to_directory)
 {
-	fs::path filepath = path_to_directory / filename;
-	//std::cout << "filepath is: " << filepath << "\n";
-	return fs::exists(filepath);
+	return fs::exists(path_to_directory / filename);
 }
 
-void Page::searchAndReplace(fs::path& path_of_file, Page& mandatoryTags, Page* optionalTags = NULL)
+void Page::searchAndReplace(fs::path& path_of_file, Page& mandatoryTags, Page* optionalTags)
 {
-	std::cout << path_of_file << "\n";
+	/*std::cout << path_of_file << "\n";
 	std::cout << "PAGE OBJ TITLE:"<< mandatoryTags.titleTag << "\n";
 	std::cout << "PAGE OBJ PATH: " << mandatoryTags.path << "\n";
-	std::cout << "PAGE OBJ PATH: " << mandatoryTags.path << "\n";
+	std::cout << "PAGE OBJ PATH: " << mandatoryTags.path << "\n";*/
 	// Opening the file for reading
 	std::ifstream fin(path_of_file);
 	// Checking if the file was opened successfully
@@ -24,17 +22,17 @@ void Page::searchAndReplace(fs::path& path_of_file, Page& mandatoryTags, Page* o
 	// Reading the contents of the file into a string
 	std::string text( (std::istreambuf_iterator<char>(fin)), std::istreambuf_iterator<char>());
 	fin.close();
+
 	// Performing the search and replace operation on the string
 	std::string searchTitleTag = "<!-- obxg:<title></title> -->";
 	std::string searchPath = "<!-- obxg:<nav>path</nav> -->";
 	std::string searchHeaderTitle = "<!-- obxg:<h2>title</h2> -->";
-	std::string replaceTitle = "Pistache";
 
-	std::string whatToken = "<!--token::what_ <p><u>What</u>:</p> -->";
-	std::string whyToken = "<!--token::what_ <p><u>What</u>:</p> -->";
-
-//	std::vector<std::string> stuffToSearch{searchTitleTag,searchPath,searchHeaderTitle,replaceTitle};
-	//size_t pos = 0;
+	std::string whatToken  = "<!--token::what_ <p><u>What</u>:</p> -->";
+	std::string whyToken   = "<!--token::why_ <p><u>Why</u>:</p> -->";
+	std::string howToken   = "<!--token::how_ <p><u>How</u>:</p> -->";
+	std::string whenToken  = "<!--token::when_ <p><u>When</u>:</p> -->";
+	std::string whereToken = "<!--token::where_ <p><u>Where</u>:</p> -->";
 
 	//replaceToken, value
 	std::unordered_map<std::string, std::string> keyToRepl =
@@ -43,6 +41,15 @@ void Page::searchAndReplace(fs::path& path_of_file, Page& mandatoryTags, Page* o
 		{searchPath,mandatoryTags.path},
 		{searchHeaderTitle, mandatoryTags.headerTitle}
 	};
+
+	if (optionalTags != NULL)
+	{
+		if (!optionalTags->what.empty()) keyToRepl[whatToken] = optionalTags->what;
+		if (!optionalTags->why.empty()) keyToRepl[whyToken] = optionalTags->why;
+		if (!optionalTags->how.empty()) keyToRepl[howToken] = optionalTags->how;
+		if (!optionalTags->when.empty()) keyToRepl[whenToken] = optionalTags->when;
+		if (!optionalTags->where.empty()) keyToRepl[whereToken] = optionalTags->where;
+	}
 	for (const auto& tag : keyToRepl) 
 	{
 		size_t pos = 0;
@@ -65,6 +72,8 @@ void Page::searchAndReplace(fs::path& path_of_file, Page& mandatoryTags, Page* o
 	// Writing the modified string back to the file
 	fout << text;
 	fout.close();
+	if (optionalTags != NULL) optionalTags = NULL;
+	
 }
 
 bool Page::CreateHTMLFile(std::string fileName, fs::path& directory, HTML::optional &options)
@@ -106,12 +115,15 @@ bool Page::CreateHTMLFile(std::string fileName, fs::path& directory, HTML::optio
 	}
 }
 
-//if (directory.filename() == "projects")
-	//searchAndReplace(newFile, options);
-// title tag
+void Page::addToIndex(const fs::path& directory, std::string filename, std::string pageName, std::string desc)
+{
+	std::cout << "directory: " << directory << "\n";
+	std::cout << "filename: " << filename << "\n";
+	std::cout << "description: " << desc<< "\n";
+	
+	//std::cout<<"Test addToIndex: " <<HTML::newEntry() << "\n";
+	
+}
 
-// path navigator tag
-
-// h2
 
 //update wikilog index page to add newly created entry (see newEntry on HTML.h)

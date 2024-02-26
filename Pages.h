@@ -32,6 +32,7 @@ public:
 	bool CreateHTMLFile(std::string fileName,fs::path& directory, HTML::optional &options);
 	bool pageExists(const std::string &filename, const fs::path& path_to_directory);
 	void searchAndReplace(fs::path& newFile, Page& mandatoryTags, Page* optionalTags = NULL);
+	void addToIndex(const fs::path& directory, std::string filename, std::string pageName, std::string desc);
 	//void searchAndReplace(std::fstream& newFile, HTML::optional &options);
 };
 

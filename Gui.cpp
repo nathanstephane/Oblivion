@@ -17,12 +17,10 @@ void Gui::DisplayMenu()
 			//nextPath = currentPath;
 			last_visited = currentPath;
 			currentPath = currentPath.parent_path();
-			
-			
+						
 			if(!history.empty()) 
 				history.pop();
 			history.push(last_visited);
-
 		}
 		//std::cout << history.top();
 
@@ -75,8 +73,6 @@ void Gui::DisplayContent()
 		}	
 	}
 
-
-
 }
 
 void Gui::DisplayActions()
@@ -88,12 +84,10 @@ void Gui::DisplayActions()
 	else if (fs::is_regular_file(selected_item))
 	{
 		ImGui::Text("selected file: %s", selected_item.filename().string().c_str());
-
 	}
 	else
 	{
 		ImGui::Text("nothing selected.");
-
 	}
 
 	//CREATE
@@ -103,8 +97,7 @@ void Gui::DisplayActions()
 	if (currentPath == project_dir ||
 		currentPath == thoughts_dir ||
 		currentPath == wikilog_dir)
-	{
-	
+	{	
 		if (ImGui::Button("Create"))
 		{
 			//Modal to prompt for file name
@@ -160,11 +153,8 @@ void Gui::metrics()
 					if (wk.path().extension() == ".html")
 						++wikilog_count;
 				}
-
 		}
-
 	}
-
 }
 
 void Gui::createFilePopup(fs::path& selectedDir)
@@ -177,8 +167,7 @@ void Gui::createFilePopup(fs::path& selectedDir)
 		ImGui::Text("Page name");
 		ImGui::SameLine();
 		ImGui::InputText(".html", pagename, sizeof(pagename));
-		ImGui::Text("\n\n");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-
+		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
 		ImGui::Checkbox("Use page name as title", &pagename_is_title);
 		static char title[300] = { '\0' };
@@ -192,28 +181,49 @@ void Gui::createFilePopup(fs::path& selectedDir)
 		{
 			std::memcpy(title,pagename,strlen(pagename)+1);
 		}
-		
-		
+			
 		//mandatory
 		HTML maker;
 		mandatoryData.titleTag = maker.maketitleTag(title);
 		mandatoryData.path = maker.navPath(selectedDir, title);
 		mandatoryData.headerTitle = maker.makeheaderTag(title);
 		
+		std::string description;
+	
 
-		
-		
+		ImGui::Text("Desc:");
+		ImGui::SameLine();
+		static char desc[300] = { '\0' };
+		description = desc;
+		ImGui::InputText("###", desc, sizeof(desc));
+	
+
 		if (selectedDir.filename() == "projects")
 		{
-			if (ImGui::Checkbox("What ?", &optns.what)) { optionalData.what = maker.optionalTag("What"); }
-			if (ImGui::Checkbox("Why ?", &optns.why))	optionalData.what = maker.optionalTag("Why");
-			if (ImGui::Checkbox("How ?", &optns.how))	optionalData.what = maker.optionalTag("How");
-			if (ImGui::Checkbox("When ?", &optns._when)) optionalData.what = maker.optionalTag("When");
-			if (ImGui::Checkbox("Where ?", &optns.where))optionalData.what = maker.optionalTag("Where");
+				ImGui::SameLine();
+				ImGui::Checkbox("Use desc as What ?", &desc_is_what);
+				if (desc_is_what)
+				{
+					optns.what = true;
+					optionalData.what = maker.optionalTag("What:" + description);
+				}
+
+				ImGui::Checkbox("What ?", &optns.what);
+				optns.what ? optionalData.what = maker.optionalTag("What") : optionalData.what = "";
+
+				ImGui::Checkbox("Why ?", &optns.why);
+				optns.why ? optionalData.why = maker.optionalTag("Why") : optionalData.why = "";
+
+				ImGui::Checkbox("How ?", &optns.how);
+				optns.how ? optionalData.how = maker.optionalTag("How") : optionalData.how = "";
+				
+				ImGui::Checkbox("When ?", &optns._when);
+				optns._when ?optionalData.when = maker.optionalTag("When") : optionalData.when = "";
+			
+				ImGui::Checkbox("Where ?", &optns.where);
+				optns.where ? optionalData.where = maker.optionalTag("Where") : optionalData.where = "";
 		}
 
-	//	HTML page;
-		
 	if (ImGui::Button("Create Page"))
 		{
 			std::string wholeFile = pagename + extension;
@@ -221,41 +231,16 @@ void Gui::createFilePopup(fs::path& selectedDir)
 			if (CreateHTMLFile(wholeFile, selectedDir, optns))
 			{
 				fs::path filepath = selectedDir / wholeFile;
-				searchAndReplace(filepath, mandatoryData);
+				if (selectedDir.filename() == "projects")
+				{
+					searchAndReplace(filepath,mandatoryData,&optionalData);
+					addToIndex(selectedDir,wholeFile,pagename,description);
+				}
+				else {
+					searchAndReplace(filepath, mandatoryData);
+				}
 			}
 		}
 		ImGui::EndPopup();
-	}
-	
-#pragma region comment
-	//if (ImGui::BeginPopupModal("Create File"), &open_createModal)
-	//{
-	//	std::string extension = ".html";
-	//	static char name[300] = { '\0' };
-	//	ImGui::Text("Page Name: ");
-	//	ImGui::InputText(".html", name, sizeof(name));
-	//	
-	//
-
-	//	if (ImGui::Button("Create Html"))
-	//	{
-	//		std::string wholeFile = name + extension;
-	//		/*if (CreateHTMLFile(wholeFile,selectedDir))
-	//		{
-	//			open_createModal = false;
-	//			std::memset(name, 0, sizeof(name));
-	//		}*/
-	//	}
-	//	ImGui::SameLine();
-	//	if (ImGui::Button("Cancel"))
-	//	{
-	//		open_createModal = false;
-	//	}
-
-	//	ImGui::EndPopup();
-	//}
-#pragma endregion
-
-
-	
+	}	
 }

@@ -26,6 +26,7 @@ private:
 
 	bool open_createModal=false;
 	bool pagename_is_title = false;
+	bool desc_is_what = false;
 
 	HTML::optional optns;
 	HTML::mandatory mandatory;
