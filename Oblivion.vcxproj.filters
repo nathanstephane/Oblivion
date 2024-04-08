@@ -39,7 +39,7 @@
     <ClCompile Include="Pages.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HTML.cpp">
+    <ClCompile Include="html.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +77,7 @@
     <ClInclude Include="Pages.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HTML.h">
+    <ClInclude Include="html.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

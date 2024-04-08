@@ -144,7 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Gui.cpp" />
-    <ClCompile Include="HTML.cpp" />
+    <ClCompile Include="html.cpp" />
     <ClCompile Include="imgui\imgui-SFML.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -155,7 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui.h" />
-    <ClInclude Include="HTML.h" />
+    <ClInclude Include="html.h" />
     <ClInclude Include="imgui\imconfig-SFML.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui-SFML.h" />

@@ -25,11 +25,11 @@ private:
 	fs::path dirPages;
 
 	bool open_createModal=false;
-	bool pagename_is_title = false;
+	bool pagename_is_title = true;
 	bool desc_is_what = false;
 
-	HTML::optional optns;
-	HTML::mandatory mandatory;
+	Html::optional optns;
+	Html::mandatory mandatory;
 	
 	Page mandatoryData;
 	Page optionalData;

@@ -8,10 +8,7 @@ bool Page::pageExists(const std::string &filename,const fs::path& path_to_direct
 
 void Page::searchAndReplace(fs::path& path_of_file, Page& mandatoryTags, Page* optionalTags)
 {
-	/*std::cout << path_of_file << "\n";
-	std::cout << "PAGE OBJ TITLE:"<< mandatoryTags.titleTag << "\n";
-	std::cout << "PAGE OBJ PATH: " << mandatoryTags.path << "\n";
-	std::cout << "PAGE OBJ PATH: " << mandatoryTags.path << "\n";*/
+
 	// Opening the file for reading
 	std::ifstream fin(path_of_file);
 	// Checking if the file was opened successfully
@@ -76,7 +73,7 @@ void Page::searchAndReplace(fs::path& path_of_file, Page& mandatoryTags, Page* o
 	
 }
 
-bool Page::CreateHTMLFile(std::string fileName, fs::path& directory, HTML::optional &options)
+bool Page::CreateHTMLFile(std::string fileName, fs::path& directory, Html::optional &options)
 {
 	if (!pageExists(fileName,directory))
 	{
@@ -110,20 +107,52 @@ bool Page::CreateHTMLFile(std::string fileName, fs::path& directory, HTML::optio
 	}
 	else {
 		//create modal in here or something to warn me that the file exists already
-		std::cout << "Sorry a page with the same name already exists.Mind giving it another name ?\n";
+		std::cerr << "Sorry a page with the same name already exists.Mind giving it another name ?\n";
 		return 0;
 	}
 }
 
 void Page::addToIndex(const fs::path& directory, std::string filename, std::string pageName, std::string desc)
 {
-	std::cout << "directory: " << directory << "\n";
-	std::cout << "filename: " << filename << "\n";
-	std::cout << "description: " << desc<< "\n";
+	std::cout << "\nNOTHING";
+	std::cout << "\n directory: " << directory << "\n";
+	std::cout << "SKfilename: " << filename << "\n";
+	//std::cout << "description: " << desc<< "\n";
 	
-	//std::cout<<"Test addToIndex: " <<HTML::newEntry() << "\n";
+	std::string file = directory.string() + "\\index.html";
+	std::cout << "FILE TO OPEN: " << file << "\n";
+	std::ifstream fin(file);
 	
+		if (!fin){
+			std::cerr << "Error opening file" << std::endl;
+		}
+		else { std::cout << "Yes opened\n"; }
+
+	std::string text((std::istreambuf_iterator<char>(fin)), std::istreambuf_iterator<char>());
+	fin.close();
+
+	std::string searchTitleTag = "<!-- obxg:insert_new_item -->";
+	std::string valueString = Html::newEntry(filename, pageName, desc)+"\n\t\t\t\t\t\t"+searchTitleTag;
+	std::cout << valueString << "\n";
+	//std::unordered_map<std::string, std::string> keyToRepl = { searchTitleTag,Html::newEntry(filename,pageName,desc) };
+	
+		size_t pos = 0;
+		while ((pos = text.find(searchTitleTag, pos)) != std::string::npos)
+		{
+			std::cout << "Yes replaced\n";
+			text.replace(pos, searchTitleTag.length(), valueString);
+			pos += valueString.length();
+		}
+	
+
+	std::ofstream fout(file, std::ios::trunc);
+	if (!fout)
+	{
+		std::cerr << "Error opening file" << std::endl;
+		return;
+	}
+	fout << text;
+	fout.close();
 }
 
 
-//update wikilog index page to add newly created entry (see newEntry on HTML.h)

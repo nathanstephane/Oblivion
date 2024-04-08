@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include <unordered_map>
-#include "HTML.h"
+#include "html.h"
 
 namespace fs = std::filesystem;
 
@@ -26,10 +26,8 @@ public:
 	std::string when;
 	std::string where;
 
-	
-
 public:
-	bool CreateHTMLFile(std::string fileName,fs::path& directory, HTML::optional &options);
+	bool CreateHTMLFile(std::string fileName,fs::path& directory, Html::optional &options);
 	bool pageExists(const std::string &filename, const fs::path& path_to_directory);
 	void searchAndReplace(fs::path& newFile, Page& mandatoryTags, Page* optionalTags = NULL);
 	void addToIndex(const fs::path& directory, std::string filename, std::string pageName, std::string desc);

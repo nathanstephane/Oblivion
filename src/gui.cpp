@@ -1,4 +1,4 @@
-#include "Gui.h"
+#include "../includes/gui.h"
 
 
 void Gui::DisplayMenu()
@@ -183,20 +183,20 @@ void Gui::createFilePopup(fs::path& selectedDir)
 		}
 			
 		//mandatory
-		HTML maker;
+		Html maker;
 		mandatoryData.titleTag = maker.maketitleTag(title);
 		mandatoryData.path = maker.navPath(selectedDir, title);
 		mandatoryData.headerTitle = maker.makeheaderTag(title);
 		
 		std::string description;
 	
-
+		ImGui::PushID(1);
 		ImGui::Text("Desc:");
 		ImGui::SameLine();
-		static char desc[300] = { '\0' };
+		static char desc[1000] = { '\0' };
+		ImGui::InputText("####", desc, sizeof(desc));
 		description = desc;
-		ImGui::InputText("###", desc, sizeof(desc));
-	
+		ImGui::PopID();
 
 		if (selectedDir.filename() == "projects")
 		{
@@ -234,6 +234,7 @@ void Gui::createFilePopup(fs::path& selectedDir)
 				if (selectedDir.filename() == "projects")
 				{
 					searchAndReplace(filepath,mandatoryData,&optionalData);
+
 					addToIndex(selectedDir,wholeFile,pagename,description);
 				}
 				else {

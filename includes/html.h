@@ -3,9 +3,10 @@
 #include <filesystem>
 #include <ctime>
 
+#include <iostream>
 namespace fs = std::filesystem;
 
-class HTML
+class Html
 {
 public:
 	struct optional
