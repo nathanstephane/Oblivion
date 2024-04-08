@@ -25,7 +25,6 @@ public:
 		std::string navigation_path(const std::string& title, const std::string& where)
 		{
 			//hardcoding for now. Will need to change this later 
-
 		}
 		std::string body_title;
 	};

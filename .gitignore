@@ -366,3 +366,7 @@ Oblivion.vcxproj
 Oblivion.vcxproj.filters
 Oblivion.vcxproj
 bitofshell/
+Oblivion.sln
+imgui.ini
+input.txt
+.gitattributes
