@@ -1,5 +1,5 @@
 #pragma warning(disable : 4996 )
-#include "html.h"
+#include "../includes/html.h"
 
  std::string Html::trim(const std::string& str)
 {
@@ -27,13 +27,10 @@
 
 std::string Html::navPath(const fs::path& dir, std::string title)
 {
-	//std::string navigation_path;
-
 return "<nav>You are here://<a href=\"../index.html\">obxigus</a>/\
 <a href=\"../"+dir.filename().string()+"/index.html\">"+dir.filename().string()+"</a>/"+trim(title)+"\
 <span class=\"blink\">|</span></nav>";
 	
-	//return navigation_path;
 }
 
 std::string Html::generated()

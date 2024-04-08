@@ -1,4 +1,4 @@
-#include "Pages.h"
+#include "../includes/pages.h"
 
 
 bool Page::pageExists(const std::string &filename,const fs::path& path_to_directory)
@@ -9,9 +9,7 @@ bool Page::pageExists(const std::string &filename,const fs::path& path_to_direct
 void Page::searchAndReplace(fs::path& path_of_file, Page& mandatoryTags, Page* optionalTags)
 {
 
-	// Opening the file for reading
 	std::ifstream fin(path_of_file);
-	// Checking if the file was opened successfully
 	if (!fin)
 	{
 		std::cerr << "Error opening file" << std::endl;
@@ -134,7 +132,6 @@ void Page::addToIndex(const fs::path& directory, std::string filename, std::stri
 	std::string searchTitleTag = "<!-- obxg:insert_new_item -->";
 	std::string valueString = Html::newEntry(filename, pageName, desc)+"\n\t\t\t\t\t\t"+searchTitleTag;
 	std::cout << valueString << "\n";
-	//std::unordered_map<std::string, std::string> keyToRepl = { searchTitleTag,Html::newEntry(filename,pageName,desc) };
 	
 		size_t pos = 0;
 		while ((pos = text.find(searchTitleTag, pos)) != std::string::npos)
@@ -144,7 +141,6 @@ void Page::addToIndex(const fs::path& directory, std::string filename, std::stri
 			pos += valueString.length();
 		}
 	
-
 	std::ofstream fout(file, std::ios::trunc);
 	if (!fout)
 	{

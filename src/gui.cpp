@@ -22,9 +22,7 @@ void Gui::DisplayMenu()
 				history.pop();
 			history.push(last_visited);
 		}
-		//std::cout << history.top();
-
-		//TODO: implement Next using selectable.. check if a dir has been selected then update it when back has been pressed.
+		
 	}
 
 	if (!history.empty() && history.top() != currentPath)
@@ -103,15 +101,11 @@ void Gui::DisplayActions()
 			//Modal to prompt for file name
 			dirPages = currentPath;
 			open_createModal = true;
-			//if (currentPath==wikilog_dir)
+		
 			ImGui::OpenPopup("CREATE HTML FILE");
-			//Create file based on template file
-				//if in wikilog/ -> ask for pagename, title
-				//if in project/ -> ask for pagename, title, what?, why?, when?, where?, how?
-				//if in thoughts/ -> ask for pagename, title, tag(philocyber, universe,srandom)				
+				
 		}
 	}
-
 
 	//OPEN (in both vscode and browser)
 
@@ -227,7 +221,7 @@ void Gui::createFilePopup(fs::path& selectedDir)
 	if (ImGui::Button("Create Page"))
 		{
 			std::string wholeFile = pagename + extension;
-			//std::cout << "Created pagename " << wholeFile << " in " << selectedDir<<" title: "<<title <<"\n";
+			
 			if (CreateHTMLFile(wholeFile, selectedDir, optns))
 			{
 				fs::path filepath = selectedDir / wholeFile;

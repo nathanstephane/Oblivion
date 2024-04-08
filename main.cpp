@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 #include "imgui-SFML.h"
-#include "Gui.h"
+#include "../includes/gui.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -71,7 +71,7 @@ int main()
     std::string project_pages = std::to_string(app.get_projectsCount());
     std::string thoughts_pages = std::to_string(app.get_thoughtsCount());
     std::string wikilog_pages = std::to_string(app.get_wikilogCount());
-    //std::cout << app.get_overallcount() << "\n";
+
    
     sf::Text stats_text;
     stats_text.setFont(font);

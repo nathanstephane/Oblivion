@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <iostream>
 #include "imgui.h"
-#include "Pages.h"
+#include "pages.h"
 #include <stack>
 #include <cstring>
 
